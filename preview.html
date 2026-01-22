@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Document - Split Lease (Preview)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #ffffff;
+            color: #3D3D3D;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: white;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1440px;
+            height: 129px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6D31C2;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #3D3D3D;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #6D31C2;
+        }
+
+        /* Main Content */
+        .main {
+            padding-top: 129px;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            padding-bottom: 3rem;
+        }
+
+        .container {
+            max-width: 42rem;
+            margin: 0 auto;
+            padding-top: 3rem;
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #3D3D3D;
+            margin-bottom: 2rem;
+        }
+
+        /* Form Styles */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #3D3D3D;
+        }
+
+        .input,
+        .select {
+            width: 250px;
+            height: 48px;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            font-family: 'DM Sans', sans-serif;
+            color: #3D3D3D;
+            background-color: white;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .input::placeholder,
+        .select option:disabled {
+            color: #9ca3af;
+        }
+
+        /* Aqua Focus State */
+        .input.aqua-focus:focus,
+        .select.aqua-focus:focus {
+            border-color: #52A8EC;
+            box-shadow: 0 0 0 6px rgba(82, 168, 236, 0.2);
+        }
+
+        /* Purple Focus State */
+        .select.purple-focus:focus {
+            border-color: #6D31C2;
+            box-shadow: 0 0 0 6px rgba(109, 49, 194, 0.2);
+        }
+
+        /* Error State */
+        .input.error,
+        .select.error {
+            border-color: #FF0000;
+        }
+
+        .input.error:focus,
+        .select.error:focus {
+            border-color: #FF0000;
+            box-shadow: 0 0 0 6px rgba(255, 0, 0, 0.2);
+        }
+
+        .error-message {
+            font-size: 0.875rem;
+            color: #FF0000;
+            margin-top: -0.25rem;
+        }
+
+        /* Button Styles */
+        .btn-purple {
+            width: 231px;
+            height: 51px;
+            margin-top: 1rem;
+            padding: 0.5rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            color: #6D31C2;
+            background-color: white;
+            border: 2px solid #6D31C2;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-purple:hover:not(:disabled) {
+            background-color: #6D31C2;
+            color: white;
+        }
+
+        .btn-purple:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-change-prices {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            color: #6D31C2;
+            background-color: white;
+            border: 2px solid #6D31C2;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-change-prices:hover {
+            background-color: #6D31C2;
+            color: white;
+        }
+
+        /* Success Message */
+        .success-message {
+            padding: 1rem;
+            background-color: #10b981;
+            color: white;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Preview Badge */
+        .preview-badge {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #6D31C2;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 700;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">Split Lease</div>
+                <nav class="nav">
+                    <a href="/corporate-pages" class="nav-link">Corporate Pages</a>
+                    <a href="/unit-tests" class="nav-link">Unit Tests</a>
+                </nav>
+            </div>
+            <div>
+                <button class="btn-change-prices" onclick="alert('Change Prices clicked')">
+                    Change Prices
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <h1>Create Document</h1>
+
+            <div id="successMessage" class="success-message">
+                ✓ Document created successfully!
+            </div>
+
+            <form class="form" id="createDocumentForm">
+                <!-- Document Selector -->
+                <div class="form-group">
+                    <label for="documentSelect">Choose document to send</label>
+                    <select
+                        id="documentSelect"
+                        class="select aqua-focus"
+                        required
+                    >
+                        <option value="" disabled selected>Choose document to send</option>
+                        <option value="1">Community Guidelines</option>
+                        <option value="2">Cancellation and Refund Policy</option>
+                        <option value="3">Fees Overview</option>
+                        <option value="4">Booking Agreement</option>
+                        <option value="5">Privacy Policy</option>
+                        <option value="6">Terms of Use</option>
+                        <option value="7">Host Guarantee Terms and Conditions</option>
+                        <option value="8">Payments Terms of Service</option>
+                        <option value="9">Host Guarantee</option>
+                        <option value="10">Example Supplemental Agreement</option>
+                        <option value="11">Example Rental Agreement</option>
+                        <option value="12">Cookie Policy</option>
+                        <option value="13">Background Check Consent Form</option>
+                    </select>
+                    <span id="documentError" class="error-message" style="display: none;"></span>
+                </div>
+
+                <!-- Document Name Input -->
+                <div class="form-group">
+                    <label for="documentName">Document Name</label>
+                    <input
+                        type="text"
+                        id="documentName"
+                        class="input aqua-focus"
+                        placeholder="Title"
+                        required
+                    />
+                    <span id="nameError" class="error-message" style="display: none;"></span>
+                </div>
+
+                <!-- Host Selector -->
+                <div class="form-group">
+                    <label for="hostSelect">Choose Host</label>
+                    <select
+                        id="hostSelect"
+                        class="select purple-focus"
+                        required
+                    >
+                        <option value="" disabled selected>Choose Host</option>
+                        <option value="user1">john.doe@example.com</option>
+                        <option value="user2">jane.smith@example.com</option>
+                        <option value="user3">bob.wilson@example.com</option>
+                        <option value="user4">sarah.johnson@example.com</option>
+                        <option value="user5">mike.brown@example.com</option>
+                        <option value="user6">emily.davis@example.com</option>
+                        <option value="user7">david.miller@example.com</option>
+                        <option value="user8">lisa.anderson@example.com</option>
+                    </select>
+                    <span id="hostError" class="error-message" style="display: none;"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" class="btn-purple" id="submitBtn">
+                        Create Document
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Preview Badge -->
+    <div class="preview-badge">
+        PREVIEW MODE
+    </div>
+
+    <script>
+        // Mock data for documents
+        const documents = {
+            '1': 'Community Guidelines',
+            '2': 'Cancellation and Refund Policy',
+            '3': 'Fees Overview',
+            '4': 'Booking Agreement',
+            '5': 'Privacy Policy',
+            '6': 'Terms of Use',
+            '7': 'Host Guarantee Terms and Conditions',
+            '8': 'Payments Terms of Service',
+            '9': 'Host Guarantee',
+            '10': 'Example Supplemental Agreement',
+            '11': 'Example Rental Agreement',
+            '12': 'Cookie Policy',
+            '13': 'Background Check Consent Form'
+        };
+
+        const hosts = {
+            'user1': { email: 'john.doe@example.com', name: 'John Doe' },
+            'user2': { email: 'jane.smith@example.com', name: 'Jane Smith' },
+            'user3': { email: 'bob.wilson@example.com', name: 'Bob Wilson' },
+            'user4': { email: 'sarah.johnson@example.com', name: 'Sarah Johnson' },
+            'user5': { email: 'mike.brown@example.com', name: 'Mike Brown' },
+            'user6': { email: 'emily.davis@example.com', name: 'Emily Davis' },
+            'user7': { email: 'david.miller@example.com', name: 'David Miller' },
+            'user8': { email: 'lisa.anderson@example.com', name: 'Lisa Anderson' }
+        };
+
+        // Get form elements
+        const documentSelect = document.getElementById('documentSelect');
+        const documentNameInput = document.getElementById('documentName');
+        const hostSelect = document.getElementById('hostSelect');
+        const form = document.getElementById('createDocumentForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        // Auto-populate document name when document is selected
+        documentSelect.addEventListener('change', function() {
+            const selectedDoc = documents[this.value];
+            if (selectedDoc) {
+                documentNameInput.value = selectedDoc;
+                // Clear error
+                documentSelect.classList.remove('error');
+                document.getElementById('documentError').style.display = 'none';
+            }
+        });
+
+        // Clear errors on input
+        documentNameInput.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.classList.remove('error');
+                document.getElementById('nameError').style.display = 'none';
+            }
+        });
+
+        hostSelect.addEventListener('change', function() {
+            if (this.value) {
+                this.classList.remove('error');
+                document.getElementById('hostError').style.display = 'none';
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Reset errors
+            documentSelect.classList.remove('error');
+            documentNameInput.classList.remove('error');
+            hostSelect.classList.remove('error');
+            document.getElementById('documentError').style.display = 'none';
+            document.getElementById('nameError').style.display = 'none';
+            document.getElementById('hostError').style.display = 'none';
+            successMessage.classList.remove('show');
+
+            let hasError = false;
+
+            // Validate document selection
+            if (!documentSelect.value) {
+                documentSelect.classList.add('error');
+                document.getElementById('documentError').textContent = 'Please select a document';
+                document.getElementById('documentError').style.display = 'block';
+                hasError = true;
+            }
+
+            // Validate document name
+            if (!documentNameInput.value.trim()) {
+                documentNameInput.classList.add('error');
+                document.getElementById('nameError').textContent = 'Document name is required';
+                document.getElementById('nameError').style.display = 'block';
+                hasError = true;
+            }
+
+            // Validate host selection
+            if (!hostSelect.value) {
+                hostSelect.classList.add('error');
+                document.getElementById('hostError').textContent = 'Please select a host';
+                document.getElementById('hostError').style.display = 'block';
+                hasError = true;
+            }
+
+            if (hasError) {
+                return;
+            }
+
+            // Simulate submission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating...';
+
+            setTimeout(() => {
+                // Log the data that would be sent
+                const selectedHost = hosts[hostSelect.value];
+                const formData = {
+                    document_on_policies: documentSelect.value,
+                    document_sent_title: documentNameInput.value.trim(),
+                    host_user: hostSelect.value,
+                    host_email: selectedHost.email,
+                    host_name: selectedHost.name + ' Full'
+                };
+
+                console.log('Document Created (Preview Mode):', formData);
+
+                // Show success message
+                successMessage.classList.add('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Reset form
+                documentSelect.value = '';
+                documentNameInput.value = '';
+                hostSelect.value = '';
+
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Document';
+
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            }, 1500);
+        });
+
+        // Hide Crisp chat (simulate the page load script)
+        console.log('Crisp chat would be hidden on page load');
+    </script>
+</body>
+</html>
